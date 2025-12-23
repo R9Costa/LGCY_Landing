@@ -2,7 +2,7 @@
 body {
     background-color: #000000; /* Deep Black */
     color: #ffffff;
-    font-family: 'Times New Roman', serif; /* Classic, authoritative font */
+    font-family: 'Times New Roman', serif;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -17,23 +17,22 @@ body {
     max-width: 600px;
 }
 
-/* Elegant, Simple, and Vistoso Logo Style */
+/* Elegant and Striking Legacy Logo Style */
 .logo {
-    font-family: 'Didot', 'Bodoni MT', 'Times New Roman', serif; /* High-end luxury fonts */
-    font-size: 7rem; /* Increased size for impact */
+    font-family: 'Didot', 'Bodoni MT', 'Times New Roman', serif;
+    font-size: 6rem; /* Adjusted for the longer word */
     color: #d4af37; /* Champagne Gold */
-    letter-spacing: 10px; /* Spacing adds elegance */
-    margin-bottom: 10px;
+    letter-spacing: 5px; /* Slightly reduced for better flow */
+    margin-bottom: 5px;
     font-weight: 400;
-    text-transform: uppercase;
-    /* Adiciona um brilho subtil para o tornar mais vistoso */
+    text-transform: none; /* Maintains "Legacy" with capital L */
     text-shadow: 0 0 20px rgba(212, 175, 55, 0.3), 0 0 40px rgba(212, 175, 55, 0.1);
 }
 
 .tagline {
     font-size: 0.75rem;
     letter-spacing: 5px;
-    color: #aaa; /* Ligeiramente mais claro para melhor contraste */
+    color: #aaa;
     margin-bottom: 50px;
     text-transform: uppercase;
 }
