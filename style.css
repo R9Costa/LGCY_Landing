@@ -1,8 +1,8 @@
-/* Configuração Geral */
+/* General Configuration */
 body {
-    background-color: #000000; /* Preto absoluto */
+    background-color: #000000; /* Deep Black */
     color: #ffffff;
-    font-family: 'Times New Roman', serif; /* Fonte clássica e elegante */
+    font-family: 'Times New Roman', serif;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -17,25 +17,24 @@ body {
     max-width: 600px;
 }
 
-/* O Logótipo LGCY */
+/* Handwritten Logo Style */
 .logo {
-    font-size: 5rem;
-    color: #d4af37; /* Dourado Champanhe */
-    letter-spacing: 20px;
-    margin-bottom: 10px;
+    font-family: 'Brush Script MT', cursive; /* Elegant handwritten style */
+    font-size: 6rem;
+    color: #d4af37; /* Champagne Gold */
+    margin-bottom: 0px;
     font-weight: 300;
-    text-transform: uppercase;
 }
 
 .tagline {
-    font-size: 0.8rem;
-    letter-spacing: 6px;
+    font-size: 0.75rem;
+    letter-spacing: 5px;
     color: #888;
     margin-bottom: 50px;
     text-transform: uppercase;
 }
 
-/* A Contagem Decrescente */
+/* Countdown */
 .countdown-container p {
     font-size: 0.7rem;
     letter-spacing: 3px;
@@ -45,17 +44,17 @@ body {
 
 #countdown {
     font-size: 2.5rem;
-    font-family: 'Courier New', Courier, monospace; /* Estilo tecnológico */
+    font-family: 'Courier New', Courier, monospace;
     margin-bottom: 40px;
     font-weight: bold;
 }
 
-/* Caixa da Oferta de Fundador */
+/* Inaugural Offer Box */
 .offer-box {
     border: 1px solid #d4af37;
     padding: 25px;
     margin-bottom: 40px;
-    background-color: rgba(212, 175, 55, 0.05); /* Brilho dourado muito subtil */
+    background-color: rgba(212, 175, 55, 0.05);
 }
 
 .offer-box p {
@@ -64,7 +63,7 @@ body {
     margin: 5px 0;
 }
 
-/* O Botão de Ação */
+/* Action Button */
 .cta-button {
     display: inline-block;
     background-color: #d4af37;
@@ -72,7 +71,7 @@ body {
     padding: 18px 40px;
     text-decoration: none;
     font-weight: bold;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     letter-spacing: 2px;
     text-transform: uppercase;
     transition: all 0.4s ease;
@@ -81,12 +80,13 @@ body {
 .cta-button:hover {
     background-color: #ffffff;
     color: #000000;
-    transform: scale(1.05); /* Pequeno zoom ao passar o rato */
+    transform: scale(1.05);
 }
 
 .footer-note {
     margin-top: 25px;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: #444;
     letter-spacing: 1px;
+    text-transform: uppercase;
 }
