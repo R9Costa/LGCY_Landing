@@ -1,92 +1,31 @@
-/* Configuração Geral */
-body {
-    background-color: #000000; /* Preto absoluto */
-    color: #ffffff;
-    font-family: 'Times New Roman', serif; /* Fonte clássica e elegante */
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-}
+// Define a data de lançamento: 1 de Janeiro de 2026
+const countdownDate = new Date("Jan 1, 2026 00:00:00").getTime();
 
-.container {
-    text-align: center;
-    padding: 20px;
-    max-width: 600px;
-}
+// Atualiza o contador a cada 1 segundo
+const timer = setInterval(function() {
 
-/* O Logótipo LGCY */
-.logo {
-    font-size: 5rem;
-    color: #d4af37; /* Dourado Champanhe */
-    letter-spacing: 20px;
-    margin-bottom: 10px;
-    font-weight: 300;
-    text-transform: uppercase;
-}
+    // Obtém a data e hora atual
+    const now = new Date().getTime();
 
-.tagline {
-    font-size: 0.8rem;
-    letter-spacing: 6px;
-    color: #888;
-    margin-bottom: 50px;
-    text-transform: uppercase;
-}
+    // Calcula a distância entre agora e a data de lançamento
+    const distance = countdownDate - now;
 
-/* A Contagem Decrescente */
-.countdown-container p {
-    font-size: 0.7rem;
-    letter-spacing: 3px;
-    margin-bottom: 10px;
-    color: #d4af37;
-}
+    // Cálculos de tempo para dias, horas, minutos e segundos
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-#countdown {
-    font-size: 2.5rem;
-    font-family: 'Courier New', Courier, monospace; /* Estilo tecnológico */
-    margin-bottom: 40px;
-    font-weight: bold;
-}
+    // Formata os números para terem sempre dois dígitos (ex: 05 em vez de 5)
+    const format = (num) => num < 10 ? "0" + num : num;
 
-/* Caixa da Oferta de Fundador */
-.offer-box {
-    border: 1px solid #d4af37;
-    padding: 25px;
-    margin-bottom: 40px;
-    background-color: rgba(212, 175, 55, 0.05); /* Brilho dourado muito subtil */
-}
+    // Mostra o resultado no elemento com id="countdown"
+    document.getElementById("countdown").innerHTML = 
+        format(days) + "d : " + format(hours) + "h : " + format(minutes) + "m : " + format(seconds) + "s";
 
-.offer-box p {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin: 5px 0;
-}
-
-/* O Botão de Ação */
-.cta-button {
-    display: inline-block;
-    background-color: #d4af37;
-    color: #000000;
-    padding: 18px 40px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    transition: all 0.4s ease;
-}
-
-.cta-button:hover {
-    background-color: #ffffff;
-    color: #000000;
-    transform: scale(1.05); /* Pequeno zoom ao passar o rato */
-}
-
-.footer-note {
-    margin-top: 25px;
-    font-size: 0.7rem;
-    color: #444;
-    letter-spacing: 1px;
-}
+    // Se a contagem terminar, mostra uma mensagem
+    if (distance < 0) {
+        clearInterval(timer);
+        document.getElementById("countdown").innerHTML = "WELCOME TO THE LEGACY";
+    }
+}, 1000);
