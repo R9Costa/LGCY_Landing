@@ -1,21 +1,67 @@
-/* style.css - Instagram-style Scroll */
-#reels-wrapper::-webkit-scrollbar {
-    display: none; /* Esconde a barra de scroll para imersão total */
+:root { 
+    --gold: #D4AF37; 
+    --black: #000000; 
+    --glass: rgba(15, 15, 15, 0.92);
+    --border: rgba(212, 175, 55, 0.15);
+    --radius: 12px;
 }
 
-.reel-item {
-    background: #000;
-    overflow: hidden;
+body, html { 
+    margin: 0; background: var(--black); color: white; 
+    font-family: 'Inter', sans-serif; overflow: hidden; height: 100%; 
 }
 
-/* Garante que o conteúdo não fique por baixo da barra de navegação */
-.reel-overlay {
-    z-index: 10;
-    pointer-events: none; /* Permite clicar no vídeo por trás se necessário */
+/* Classic Logo Style */
+.classic-logo { 
+    font-family: 'Playfair Display', serif; 
+    font-weight: 400; 
+    font-style: italic;
+    color: var(--gold); 
+    font-size: 3.5rem; 
+    letter-spacing: 2px;
+    margin-bottom: 10px;
 }
 
-.gold-text {
-    background: linear-gradient(135deg, #D4AF37 0%, #FCEABB 50%, #D4AF37 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+#screen-countdown { 
+    height: 100vh; display: flex; flex-direction: column; 
+    align-items: center; justify-content: center; text-align: center; 
 }
+
+#timer { font-size: 1.1rem; letter-spacing: 4px; font-weight: 300; color: #666; }
+
+/* Main UI Glassmorphism */
+.app-header { 
+    padding: 25px; text-align: center; font-family: 'Playfair Display'; 
+    color: var(--gold); border-bottom: 1px solid var(--border); 
+    background: black; position: fixed; top:0; width:100%; z-index:1000;
+    letter-spacing: 6px; font-size: 0.8rem;
+}
+
+.bottom-nav { 
+    position: fixed; bottom: 0; width: 100%; height: 85px; 
+    background: var(--glass); border-top: 1px solid var(--border); 
+    display: flex; justify-content: space-around; align-items: center; 
+    backdrop-filter: blur(30px); z-index:1000;
+}
+
+.nav-item { color: #333; cursor: pointer; transition: 0.4s; }
+.nav-item i { width: 26px; height: 26px; stroke-width: 1.2px; }
+.nav-item.active { color: var(--gold); transform: translateY(-5px); }
+
+/* Card & Button Patterns */
+.glass-card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    padding: 30px;
+    margin-bottom: 20px;
+    border-radius: var(--radius);
+    backdrop-filter: blur(10px);
+}
+
+.gold-btn {
+    width: 100%; background: var(--gold); color: black; border: none; 
+    padding: 18px; font-weight: bold; border-radius: 8px; 
+    text-transform: uppercase; letter-spacing: 2px; cursor: pointer;
+}
+
+.gold-text { color: var(--gold); font-family: 'Playfair Display'; }
