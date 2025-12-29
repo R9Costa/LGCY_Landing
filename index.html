@@ -1,36 +1,21 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LGCY | Private Access</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlbBZlLunO9_jisfeQ1NgoAChYc2FeJP4"></script>
-</head>
-<body oncontextmenu="return false;">
+<script src="https://unpkg.com/lucide@latest"></script>
 
-    <section id="screen-countdown">
-        <div class="logo">LGCY</div>
-        <div id="timer">00:00:00:00</div>
-        <p class="tagline">The Legacy Chain begins Jan 1st</p>
-    </section>
+<nav class="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('intelligence', this)">
+        <i data-lucide="layout-template"></i>
+    </div>
+    <div class="nav-item" onclick="switchTab('inventory', this)">
+        <i data-lucide="compass"></i>
+    </div>
+    <div class="nav-item" onclick="switchTab('enclave', this)">
+        <i data-lucide="message-circle"></i>
+    </div>
+    <div class="nav-item" onclick="switchTab('repository', this)">
+        <i data-lucide="archive"></i>
+    </div>
+    <div class="nav-item" onclick="switchTab('directorate', this)">
+        <i data-lucide="user"></i>
+    </div>
+</nav>
 
-    <section id="screen-app" style="display:none;">
-        <header class="app-header">LGCY.vip</header>
-        <main id="main-content"></main>
-        <nav class="bottom-nav">
-            <div class="nav-item active" onclick="switchTab('insights', this)">◈</div>
-            <div class="nav-item" onclick="switchTab('portfolio', this)">✧</div>
-            <div class="nav-item" onclick="switchTab('lounge', this)">▣</div>
-            <div class="nav-item" onclick="switchTab('vault', this)">◎</div>
-            <div class="nav-item" onclick="switchTab('status', this)">👤</div>
-        </nav>
-    </section>
-
-    <div id="security-blur">SECURITY LOCK ACTIVE</div>
-
-    <script src="app.js"></script>
-    <script src="admin.js"></script>
-</body>
-</html>
+<script>lucide.createIcons();</script>
