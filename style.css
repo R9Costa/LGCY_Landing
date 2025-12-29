@@ -1,14 +1,24 @@
-:root { --gold: #D4AF37; --black: #000000; --grey: #1a1a1a; }
-body, html { margin: 0; background: var(--black); color: white; font-family: 'Inter', sans-serif; overflow: hidden; height: 100%; }
-#screen-countdown { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.logo { font-family: 'Playfair Display'; color: var(--gold); font-size: 3.5rem; letter-spacing: 8px; }
-#timer { font-size: 1.2rem; margin-top: 20px; font-weight: 300; }
-.app-header { padding: 20px; text-align: center; font-family: 'Playfair Display'; color: var(--gold); border-bottom: 1px solid var(--grey); position: fixed; top:0; width:100%; z-index:100; background: black; }
-.bottom-nav { position: fixed; bottom: 0; width: 100%; height: 70px; background: rgba(10,10,10,0.95); border-top: 1px solid var(--grey); display: flex; justify-content: space-around; align-items: center; backdrop-filter: blur(10px); }
-.nav-item { font-size: 24px; color: #444; cursor: pointer; }
-.nav-item.active { color: var(--gold); }
-#main-content { padding: 80px 20px; height: 100vh; overflow-y: auto; box-sizing: border-box; }
-.admin-card { background: #0a0a0a; border: 1px solid #222; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-#security-blur { position: fixed; top:0; width:100%; height:100%; background:black; display:none; z-index:9999; align-items:center; justify-content:center; color:var(--gold); }
-body.blurred #screen-app { filter: blur(40px); }
-body.blurred #security-blur { display: flex; }
+/* style.css - Modern Icon Refinement */
+.nav-item { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #444; /* Dimmed state */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.nav-item i {
+    width: 28px;
+    height: 28px;
+    stroke-width: 1.5px; /* Clean, modern lines */
+}
+
+.nav-item.active { 
+    color: var(--gold); 
+    transform: translateY(-5px); /* Subtle Instagram-style lift */
+}
+
+.nav-item.active i {
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
+}
