@@ -3,27 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LGCY.vip | Private Access</title>
+    <title>LGCY | Private Access</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body oncontextmenu="return false;">
 
-    <section id="screen-countdown">
+    <section id="screen-countdown" class="active-screen">
         <div class="logo">LGCY</div>
-        <div class="timer-container">
-            <span id="timer">Loading...</span>
-        </div>
-        <p class="tagline">The Legacy Chain begins soon.</p>
+        <div id="timer">00:00:00:00</div>
+        <p class="tagline">The Legacy Chain begins Jan 1st</p>
     </section>
 
     <section id="screen-app" style="display:none;">
-        <header class="app-header">LGCY</header>
+        <header class="app-header">LGCY.vip</header>
+        <main id="main-content"></main>
         
-        <main id="main-content">
-            </main>
-
         <nav class="bottom-nav">
             <div class="nav-item active" onclick="switchTab('insights', this)">◈</div>
             <div class="nav-item" onclick="switchTab('portfolio', this)">✧</div>
@@ -33,7 +29,7 @@
         </nav>
     </section>
 
-    <div id="privacy-overlay">SECURITY LOCK ACTIVE</div>
+    <div id="security-blur">SECURITY LOCK ACTIVE</div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="app.js"></script>
