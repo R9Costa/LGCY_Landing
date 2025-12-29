@@ -1,35 +1,33 @@
-// Verifica se o URL contém "?access=admin"
-const urlParams = new URLSearchParams(window.location.search);
-const isAdmin = urlParams.get('access') === 'admin';
+const LAUNCH_DATE = new Date("Jan 1, 2026 00:00:00").getTime();
+const YT_KEY = 'AIzaSyAVDwghPzU3LodThasHgT9mSo19mKDwcgY';
 
-if (isAdmin) {
-    // Salta o relógio e entra direto na App
+function init() {
+    checkAdminAccess();
+    startCountdown();
+    setupPrivacy();
+}
+
+// Acesso Admin Antecipado Imediato
+function checkAdminAccess() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('access') === 'r9admin') {
+        sessionStorage.setItem('isAdmin', 'true');
+        activateApp();
+    }
+}
+
+function activateApp() {
     document.getElementById('screen-countdown').style.display = 'none';
     document.getElementById('screen-app').style.display = 'block';
     switchTab('insights', document.querySelector('.nav-item'));
-} else {
-    // Segue a lógica normal do relógio para o resto do mundo
-    startCountdown(); 
-}const LAUNCH_DATE = new Date("Jan 1, 2026 00:00:00").getTime();
-
-// 1. Iniciar o sistema
-function init() {
-    startCountdown();
-    setupSecurity();
 }
 
-// 2. Lógica do Relógio
 function startCountdown() {
-    const timerInterval = setInterval(() => {
+    setInterval(() => {
         const now = new Date().getTime();
         const diff = LAUNCH_DATE - now;
-
-        if (diff <= 0) {
-            clearInterval(timerInterval);
-            document.getElementById('screen-countdown').style.display = 'none';
-            document.getElementById('screen-app').style.display = 'block';
-            switchTab('insights', document.querySelector('.nav-item'));
-        } else {
+        if (diff <= 0) activateApp();
+        else {
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -39,70 +37,47 @@ function startCountdown() {
     }, 1000);
 }
 
-// 3. Navegação e Carregamento de Reels
+// Navegação entre Abas
 async function switchTab(tab, el) {
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     el.classList.add('active');
-    
-    const content = document.getElementById('main-content');
-    
-    if (tab === 'insights') {
-        await loadReels(content);
+    const main = document.getElementById('main-content');
+
+    if (sessionStorage.getItem('isAdmin') === 'true' && tab === 'status') {
+        renderAdminDashboard(main);
+    } else if (tab === 'insights') {
+        loadYouTubeInsights(main);
     } else {
-        content.style.padding = "100px 20px";
-        content.innerHTML = `<h2 style="color:var(--gold)">${tab.toUpperCase()}</h2><p>Exclusive content arriving soon.</p>`;
+        main.innerHTML = `<div style="padding:120px 20px;"><h2>${tab.toUpperCase()}</h2><p>Coming Jan 1st.</p></div>`;
     }
 }
 
-// 4. Lógica do Feed Reels
-async function loadReels(container) {
-    container.style.padding = "0";
+async function loadYouTubeInsights(container) {
+    const query = "luxury real estate yachts Bloomberg";
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=5&key=${YT_KEY}`;
     try {
-        const response = await fetch('news.json');
-        const news = await response.json();
-        
+        const res = await fetch(url);
+        const data = await res.json();
         let html = '<div id="reels-wrapper">';
-        news.forEach((item, index) => {
+        data.items.forEach(v => {
             html += `
                 <div class="reel-item">
-                    ${item.video_url ? 
-                        `<video class="reel-media" loop playsinline muted><source src="${item.video_url}" type="video/mp4"></video>` : 
-                        `<img src="${item.img}" class="reel-media">`
-                    }
-                    <div class="reel-overlay">
-                        <span class="reel-tag">LGCY Intelligence</span>
-                        <h2 class="reel-title">${item.title}</h2>
-                        <p class="reel-description">${item.desc}</p>
-                        <button class="gold-btn" onclick="window.open('${item.url}', '_blank')">READ INSIGHTS</button>
-                    </div>
+                    <iframe class="reel-media" src="https://www.youtube.com/embed/${v.id.videoId}?autoplay=1&mute=1&controls=0&modestbranding=1" allow="autoplay"></iframe>
+                    <div class="reel-overlay"><h2 class="gold-text">${v.snippet.title}</h2></div>
                 </div>`;
         });
-        html += '</div>';
-        container.innerHTML = html;
-        initVideoObserver();
-    } catch (e) {
-        container.innerHTML = "<p style='padding:100px 20px'>Feed offline.</p>";
-    }
+        container.innerHTML = html + '</div>';
+    } catch(e) { container.innerHTML = "<p>Insights Offline.</p>"; }
 }
 
-// 5. Auto-play de Vídeos (Observer)
-function initVideoObserver() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            const video = entry.target.querySelector('video');
-            if (video) {
-                if (entry.isIntersecting) video.play();
-                else { video.pause(); video.currentTime = 0; }
-            }
-        });
-    }, { threshold: 0.8 });
-    document.querySelectorAll('.reel-item').forEach(item => observer.observe(item));
-}
-
-// 6. Segurança
-function setupSecurity() {
+function setupPrivacy() {
     window.onblur = () => document.body.classList.add('blurred');
     window.onfocus = () => document.body.classList.remove('blurred');
+}
+
+let map;
+function initMap() {
+    map = new google.maps.Map(document.createElement('div'), {center:{lat:0,lng:0}, zoom:2});
 }
 
 init();
