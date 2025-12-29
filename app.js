@@ -1,50 +1,61 @@
+/* app.js - Intelligence & Directorate Engine */
 const LAUNCH_DATE = new Date("Jan 1, 2026 00:00:00").getTime();
 
 function init() {
     const params = new URLSearchParams(window.location.search);
+    // Instant Admin Access via ?access=r9admin
     if (params.get('access') === 'r9admin') {
-        sessionStorage.setItem('isAdmin', 'true');
-        showApp();
+        sessionStorage.setItem('role', 'admin');
+        showPlatform();
     } else {
-        startCountdown();
+        startChronos();
     }
-    setupPrivacy();
+    setupPrivacyLock();
 }
 
-function showApp() {
+function showPlatform() {
     document.getElementById('screen-countdown').style.display = 'none';
     document.getElementById('screen-app').style.display = 'block';
-    switchTab('insights', document.querySelector('.nav-item'));
+    switchTab('intelligence', document.querySelector('.nav-item'));
 }
 
-function startCountdown() {
-    setInterval(() => {
-        const now = new Date().getTime();
-        const diff = LAUNCH_DATE - now;
-        if (diff <= 0) showApp();
-        else {
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById('timer').innerText = `${d}D : ${h}H : ...`;
-        }
-    }, 1000);
-}
-
-function switchTab(tab, el) {
+async function switchTab(tab, el) {
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     el.classList.add('active');
     const main = document.getElementById('main-content');
+    
+    // Refresh Icons after tab switch
+    lucide.createIcons();
 
-    if (sessionStorage.getItem('isAdmin') === 'true' && tab === 'status') {
-        renderAdminDashboard(main);
+    if (sessionStorage.getItem('role') === 'admin' && tab === 'directorate') {
+        renderDirectorate(main);
+    } else if (tab === 'intelligence') {
+        renderIntelligenceReels(main);
     } else {
-        main.innerHTML = `<h2 style="color:#D4AF37">${tab.toUpperCase()}</h2><p>Disponível em 1 de Janeiro.</p>`;
+        main.innerHTML = `
+            <div class="glass-card fade-in" style="margin-top:40px; border-radius:12px;">
+                <h2 class="gold-text">${tab.toUpperCase()}</h2>
+                <p class="subtitle">Access restricted until January 1st.</p>
+            </div>
+        `;
     }
 }
 
-function setupPrivacy() {
-    window.onblur = () => document.body.classList.add('blurred');
-    window.onfocus = () => document.body.classList.remove('blurred');
+// Modern Intelligence Feed (Instagram Style)
+function renderIntelligenceReels(container) {
+    container.style.padding = "0";
+    container.innerHTML = `
+        <div id="reels-wrapper" style="height:100vh; overflow-y:scroll; scroll-snap-type:y mandatory;">
+            <div class="reel-item" style="height:100vh; scroll-snap-align:start; position:relative; background:#050505;">
+                <video src="https://path-to-your-luxury-video.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+                <div class="reel-overlay" style="position:absolute; bottom:120px; padding:30px; width:100%; background:linear-gradient(transparent, black);">
+                    <span class="subtitle">Global Intelligence</span>
+                    <h3 class="gold-text">The Evolution of Private Equity</h3>
+                    <p style="font-size:0.9rem; color:#ccc;">Analyzing off-market liquidity trends for 2026.</p>
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 init();
