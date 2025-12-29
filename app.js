@@ -1,4 +1,16 @@
-const LAUNCH_DATE = new Date("Jan 1, 2026 00:00:00").getTime();
+// Verifica se o URL contém "?access=admin"
+const urlParams = new URLSearchParams(window.location.search);
+const isAdmin = urlParams.get('access') === 'admin';
+
+if (isAdmin) {
+    // Salta o relógio e entra direto na App
+    document.getElementById('screen-countdown').style.display = 'none';
+    document.getElementById('screen-app').style.display = 'block';
+    switchTab('insights', document.querySelector('.nav-item'));
+} else {
+    // Segue a lógica normal do relógio para o resto do mundo
+    startCountdown(); 
+}const LAUNCH_DATE = new Date("Jan 1, 2026 00:00:00").getTime();
 
 // 1. Iniciar o sistema
 function init() {
