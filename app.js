@@ -1,6 +1,13 @@
 const LAUNCH_DATE = new Date("Jan 1, 2026 00:00:00").getTime();
 
-function startApp() {
+// 1. Iniciar o sistema
+function init() {
+    startCountdown();
+    setupSecurity();
+}
+
+// 2. Lógica do Relógio
+function startCountdown() {
     const timerInterval = setInterval(() => {
         const now = new Date().getTime();
         const diff = LAUNCH_DATE - now;
@@ -20,28 +27,70 @@ function startApp() {
     }, 1000);
 }
 
-function switchTab(tab, el) {
+// 3. Navegação e Carregamento de Reels
+async function switchTab(tab, el) {
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     el.classList.add('active');
+    
     const content = document.getElementById('main-content');
     
-    // Simulação de carregamento de Abas
-    content.innerHTML = `<div style="padding:40px; color:#888;">Loading ${tab.toUpperCase()}...</div>`;
-    
-    if(tab === 'status') {
-        content.innerHTML = `
-            <div class="legacy-card" style="padding:20px; border:1px solid #222; border-radius:15px; background:#0a0a0a;">
-                <h3 style="color:#D4AF37; font-family:'Playfair Display';">LEGACY CHAIN</h3>
-                <p style="font-size:0.8rem; color:#666;">PATRON: Founder Member</p>
-                <hr style="border:0; border-top:1px solid #222; margin:20px 0;">
-                <p style="font-size:0.7rem; letter-spacing:1px;">DESCENDANTS: 0 Verified</p>
-                <button style="width:100%; background:#D4AF37; border:0; padding:12px; border-radius:5px; font-weight:bold; margin-top:20px;">GENERATE KEY</button>
-            </div>`;
+    if (tab === 'insights') {
+        await loadReels(content);
+    } else {
+        content.style.padding = "100px 20px";
+        content.innerHTML = `<h2 style="color:var(--gold)">${tab.toUpperCase()}</h2><p>Exclusive content arriving soon.</p>`;
     }
 }
 
-// Segurança: Blur ao sair da aba
-window.onblur = () => document.body.classList.add('blurred');
-window.onfocus = () => document.body.classList.remove('blurred');
+// 4. Lógica do Feed Reels
+async function loadReels(container) {
+    container.style.padding = "0";
+    try {
+        const response = await fetch('news.json');
+        const news = await response.json();
+        
+        let html = '<div id="reels-wrapper">';
+        news.forEach((item, index) => {
+            html += `
+                <div class="reel-item">
+                    ${item.video_url ? 
+                        `<video class="reel-media" loop playsinline muted><source src="${item.video_url}" type="video/mp4"></video>` : 
+                        `<img src="${item.img}" class="reel-media">`
+                    }
+                    <div class="reel-overlay">
+                        <span class="reel-tag">LGCY Intelligence</span>
+                        <h2 class="reel-title">${item.title}</h2>
+                        <p class="reel-description">${item.desc}</p>
+                        <button class="gold-btn" onclick="window.open('${item.url}', '_blank')">READ INSIGHTS</button>
+                    </div>
+                </div>`;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+        initVideoObserver();
+    } catch (e) {
+        container.innerHTML = "<p style='padding:100px 20px'>Feed offline.</p>";
+    }
+}
 
-startApp();
+// 5. Auto-play de Vídeos (Observer)
+function initVideoObserver() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const video = entry.target.querySelector('video');
+            if (video) {
+                if (entry.isIntersecting) video.play();
+                else { video.pause(); video.currentTime = 0; }
+            }
+        });
+    }, { threshold: 0.8 });
+    document.querySelectorAll('.reel-item').forEach(item => observer.observe(item));
+}
+
+// 6. Segurança
+function setupSecurity() {
+    window.onblur = () => document.body.classList.add('blurred');
+    window.onfocus = () => document.body.classList.remove('blurred');
+}
+
+init();
