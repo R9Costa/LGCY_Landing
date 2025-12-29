@@ -1,53 +1,44 @@
-const LAUNCH_DATE = new Date("Jan 1, 2026 00:00:00").getTime();
+/* app.js - Intelligence Feed Engine */
+const YT_API_KEY = 'AIzaSyAVDwghPzU3LodThasHgT9mSo19mKDwcgY';
 
-function init() {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('access') === 'r9admin') {
-        sessionStorage.setItem('role', 'admin');
-        activatePlatform();
-    } else {
-        runChronos();
-    }
-    setupSecurityLock();
-}
-
-function activatePlatform() {
-    document.getElementById('screen-countdown').style.display = 'none';
-    document.getElementById('screen-app').style.display = 'block';
-    switchTab('intelligence', document.querySelector('.nav-item'));
-    if (typeof lucide !== 'undefined') lucide.createIcons();
-}
-
-function runChronos() {
-    setInterval(() => {
-        const now = new Date().getTime();
-        const diff = LAUNCH_DATE - now;
-        if (diff <= 0) activatePlatform();
-        else {
-            const d = Math.floor(diff / 86400000);
-            const h = Math.floor((diff % 86400000) / 3600000);
-            document.getElementById('timer').innerText = `${d}D : ${h}H : REMAINING`;
-        }
-    }, 1000);
-}
-
-async function switchTab(tab, el) {
-    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-    el.classList.add('active');
-    const main = document.getElementById('main-content');
-    main.style.padding = "110px 20px 100px 20px";
+async function renderIntelligenceReels(container) {
+    container.style.padding = "0"; // Full screen for Reels
     
-    if (sessionStorage.getItem('role') === 'admin' && tab === 'directorate') {
-        renderDirectorate(main);
-    } else {
-        main.innerHTML = `<div class="glass-card"><h2 style="color:#D4AF37; font-family:'Playfair Display'">${tab.toUpperCase()}</h2><p style="font-size:0.7rem; letter-spacing:2px; color:#666;">ACCESS RESTRICTED UNTIL JANUARY 1ST.</p></div>`;
+    // Canais e temas de elite: Wealth, Luxury Real Estate, Global Economy
+    const query = "luxury real estate news|wealth management trends|Bloomberg luxury|Forbes Billionaires";
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&videoEmbeddable=true&maxResults=6&key=${YT_API_KEY}`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        let html = '<div id="reels-wrapper" style="height:100vh; overflow-y:scroll; scroll-snap-type:y mandatory; background:#000;">';
+        
+        data.items.forEach(video => {
+            const videoId = video.id.videoId;
+            const title = video.snippet.title;
+            
+            html += `
+                <div class="reel-item" style="height:100vh; width:100vw; scroll-snap-align:start; position:relative;">
+                    <iframe 
+                        style="width:100%; height:100%; border:none;"
+                        src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&modestbranding=1&loop=1&playlist=${videoId}" 
+                        allow="autoplay; encrypted-media">
+                    </iframe>
+                    <div class="reel-overlay" style="position:absolute; bottom:110px; left:0; width:100%; padding:30px; background:linear-gradient(transparent, rgba(0,0,0,0.9)); box-sizing:border-box;">
+                        <span class="subtitle" style="color:#D4AF37; font-size:0.7rem; letter-spacing:3px;">GLOBAL INTELLIGENCE</span>
+                        <h3 class="gold-text" style="font-size:1.2rem; margin:10px 0; font-family:'Playfair Display';">${title}</h3>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <div style="width:30px; height:30px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; color:black; font-weight:bold; font-size:0.6rem;">L</div>
+                            <span style="font-size:0.8rem; color:#ccc;">LGCY Proprietary Stream</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        container.innerHTML = html + '</div>';
+    } catch (e) {
+        container.innerHTML = `<div class="glass-card" style="margin:100px 20px;"><h2 class="gold-text">OFFLINE</h2><p>Connection to intelligence servers interrupted.</p></div>`;
     }
-    if (typeof lucide !== 'undefined') lucide.createIcons();
 }
-
-function setupSecurityLock() {
-    window.onblur = () => document.body.classList.add('blurred');
-    window.onfocus = () => document.body.classList.remove('blurred');
-}
-
-init();
