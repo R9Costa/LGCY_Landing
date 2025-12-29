@@ -1,8 +1,7 @@
-/*const LAUNCH_DATE = new Date("Jan 1, 2026 00:00:00").getTime();
+const LAUNCH_DATE = new Date("Jan 1, 2026 00:00:00").getTime();
 
 function init() {
     const params = new URLSearchParams(window.location.search);
-    // Instant Admin Access via ?access=r9admin
     if (params.get('access') === 'r9admin') {
         sessionStorage.setItem('role', 'admin');
         activatePlatform();
@@ -16,6 +15,7 @@ function activatePlatform() {
     document.getElementById('screen-countdown').style.display = 'none';
     document.getElementById('screen-app').style.display = 'block';
     switchTab('intelligence', document.querySelector('.nav-item'));
+    if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
 function runChronos() {
@@ -37,16 +37,12 @@ async function switchTab(tab, el) {
     const main = document.getElementById('main-content');
     main.style.padding = "110px 20px 100px 20px";
     
-    // Refresh Icons
-    lucide.createIcons();
-
     if (sessionStorage.getItem('role') === 'admin' && tab === 'directorate') {
         renderDirectorate(main);
-    } else if (tab === 'intelligence') {
-        main.innerHTML = `<div class="glass-card"><h2 class="gold-text">INTELLIGENCE</h2><p class="subtitle">Global liquidity insights arriving Jan 1st.</p></div>`;
     } else {
-        main.innerHTML = `<div class="glass-card"><h2 class="gold-text">${tab.toUpperCase()}</h2><p class="subtitle">Access restricted to verified patrons.</p></div>`;
+        main.innerHTML = `<div class="glass-card"><h2 style="color:#D4AF37; font-family:'Playfair Display'">${tab.toUpperCase()}</h2><p style="font-size:0.7rem; letter-spacing:2px; color:#666;">ACCESS RESTRICTED UNTIL JANUARY 1ST.</p></div>`;
     }
+    if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
 function setupSecurityLock() {
@@ -55,4 +51,3 @@ function setupSecurityLock() {
 }
 
 init();
- app.js - Intelligence & Directorate 
