@@ -1,21 +1,41 @@
-/* admin.js - Sovereign Directorate */
+/* admin.js - The Sovereign Profile & Mandatory Details */
 function renderDirectorate(container) {
     container.innerHTML = `
-        <div style="padding:20px;">
-            <h1 style="color:var(--gold); font-family:'Playfair Display'">Sovereign Directorate</h1>
+        <div class="profile-fade" style="padding: 20px;">
+            <div class="glass-card" style="text-align:center;">
+                <div class="profile-avatar" style="border: 2px solid var(--gold);"></div>
+                <h2 class="gold-text">Node #001 | Founder</h2>
+                <div class="points-badge">${(12550).toLocaleString()} LEGACY POINTS</div>
+            </div>
+
             <div class="glass-card">
-                <small>MEMBERSHIP LIQUIDITY</small>
-                <div style="display:flex; justify-content:space-between; margin-top:15px;">
-                    <div><small>ENTRY</small><br><strong>€1,000</strong></div>
-                    <div><small>MONTHLY</small><br><strong>€250</strong></div>
-                    <div class="gold-text"><strong>€1,250.00</strong></div>
+                <h3 class="subtitle">Mandatory Profile Details</h3>
+                <form id="profile-form" style="display:flex; flex-direction:column; gap:15px; margin-top:15px;">
+                    <input type="text" placeholder="Full Professional Name" required class="glass-input">
+                    <select class="glass-input">
+                        <option>Net Worth Tier: €1M - €10M</option>
+                        <option>Net Worth Tier: €10M - €100M</option>
+                        <option>Net Worth Tier: Ultra (UHNWI)</option>
+                    </select>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.7rem;">Privacy:</span>
+                        <select class="glass-input" style="width:150px;">
+                            <option>Public</option>
+                            <option>Legacy Chain</option>
+                            <option>Private</option>
+                        </select>
+                    </div>
+                    <button class="gold-btn" style="padding:10px;">Update Sovereign Status</button>
+                </form>
+            </div>
+
+            <div class="glass-card">
+                <h3 class="subtitle">My Legacy Chain</h3>
+                <div class="chain-tree" style="margin-top:15px;">
+                    <div class="chain-node active"><span class="node-dot"></span>Origin (You)</div>
                 </div>
             </div>
-            <div class="glass-card">
-                <small>FEE PROTOCOLS</small>
-                <p style="margin:10px 0; font-size:0.8rem;">✧ Sales: 1.0% | Rentals: 5.0%</p>
-                <p style="margin:0; font-size:0.8rem;">✧ Philanthropy: 0.5%</p>
-            </div>
-            <button class="gold-btn" onclick="alert('Syncing Stripe Gateway...')">AUTHORIZE ENTITIES</button>
-        </div>`;
+        </div>
+    `;
+    lucide.createIcons();
 }
