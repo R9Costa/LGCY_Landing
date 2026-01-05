@@ -1,7 +1,7 @@
 :root { 
     --gold: #D4AF37; 
-    --glass: rgba(12, 12, 12, 0.97);
-    --border: rgba(212, 175, 55, 0.15);
+    --glass: rgba(12, 12, 12, 0.98);
+    --border: rgba(212, 175, 55, 0.2);
     --radius: 12px;
 }
 
@@ -10,24 +10,17 @@ body, html { margin: 0; background: #000; color: #fff; font-family: 'Inter', san
 .app-header { 
     padding: 25px; text-align: center; font-family: 'Playfair Display', serif; font-style: italic;
     color: var(--gold); border-bottom: 1px solid var(--border); position: fixed; top:0; width:100%; z-index:1000;
-    background: #000; font-size: 1.4rem; letter-spacing: 2px;
+    background: #000; font-size: 1.4rem;
 }
 
-/* Stories & Navigation */
 .stories-wrapper { display: flex; gap: 15px; padding: 110px 15px 20px 15px; overflow-x: auto; background: #000; scrollbar-width: none; }
-.bottom-nav { position: fixed; bottom: 0; width: 100%; height: 85px; background: var(--glass); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; backdrop-filter: blur(25px); z-index:1000; }
-.nav-item { color: #444; cursor: pointer; transition: 0.3s; }
-.nav-item.active { color: var(--gold); transform: translateY(-5px); }
+.bottom-nav { position: fixed; bottom: 0; width: 100%; height: 85px; background: var(--glass); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; backdrop-filter: blur(20px); z-index:1000; }
+.nav-item { color: #444; cursor: pointer; }
+.nav-item.active { color: var(--gold); }
+
+.glass-card { background: var(--glass); border: 1px solid var(--border); padding: 25px; border-radius: var(--radius); margin: 15px; }
+.gold-text { color: var(--gold); font-family: 'Playfair Display'; }
 
 /* Merit Bar */
-.merit-container { margin-top: 20px; }
-.merit-bar-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
-.merit-bar-fill { height: 100%; background: linear-gradient(90deg, #8A6D3B, #D4AF37); box-shadow: 0 0 10px rgba(212,175,55,0.4); border-radius: 10px; transition: 1s; }
-
-/* Cards & Inputs */
-.glass-card { background: var(--glass); border: 1px solid var(--border); padding: 25px; border-radius: var(--radius); margin-bottom: 20px; backdrop-filter: blur(10px); }
-.glass-input { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 8px; width: 100%; box-sizing: border-box; }
-.gold-btn { width: 100%; background: var(--gold); color: #000; border: none; padding: 18px; font-weight: bold; border-radius: 8px; text-transform: uppercase; cursor: pointer; }
-
-.metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-.metric-value { font-size: 1.5rem; color: var(--gold); font-weight: bold; }
+.merit-bar-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-top:10px; }
+.merit-bar-fill { height: 100%; background: var(--gold); box-shadow: 0 0 10px var(--gold); border-radius: 10px; transition: 1s; }
