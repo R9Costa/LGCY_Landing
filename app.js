@@ -1,59 +1,42 @@
-/* app.js - The Legacy Unified Engine */
-const YT_KEY = 'AIzaSyAVDwghPzU3LodThasHgT9mSo19mKDwcgY';
-
-function init() {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('access') === 'r9admin') sessionStorage.setItem('role', 'admin');
-    
-    renderStories();
-    switchTab('intelligence', document.querySelector('.nav-item'));
-    
-    window.onblur = () => document.body.classList.add('blurred');
-    window.onfocus = () => document.body.classList.remove('blurred');
-}
-
-function renderStories() {
-    const container = document.getElementById('stories-container');
-    const users = ['My Legacy', 'Director', 'Elite_01', 'Bespoke_H'];
-    container.innerHTML = users.map(u => `<div class="story-circle"><div style="width:100%;height:100%;background:#222;border-radius:50%;"></div><small style="display:block;text-align:center;font-size:0.5rem;margin-top:5px;">${u}</small></div>`).join('');
-}
-
-async function switchTab(tab, el) {
-    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-    el.classList.add('active');
-    const main = document.getElementById('main-content');
-    lucide.createIcons();
-
-    if (tab === 'intelligence') {
-        loadReels(main); // Feed Bloomberg/Luxury
-    } else if (tab === 'inventory') {
-        renderPortfolio(main); // Now includes High-end Watches
-    } else if (tab === 'social') {
-        renderSocialUpload(main); // Stories/Posts/Reels upload
-    } else if (tab === 'directorate' && sessionStorage.getItem('role') === 'admin') {
-        renderDirectorate(main); // From admin.js
-    } else {
-        main.innerHTML = `<div class="glass-card"><h2 style="color:var(--gold)">${tab.toUpperCase()}</h2><p>Synchronizing Private Node...</p></div>`;
-    }
-    setTimeout(() => lucide.createIcons(), 50);
-}
-
-// Aba 2: Portfolio with Horology
-function renderPortfolio(container) {
-    const categories = ['Real Estate', 'Supercars', 'Yachts', 'Jets', 'Horology & Acc.'];
+/* app.js - Creation Workshop & Asset Logic */
+function renderSocialUpload(container) {
     container.innerHTML = `
         <div style="padding:20px;">
-            <h1 style="color:var(--gold); font-family:'Playfair Display'">The Inventory</h1>
-            <div style="display:flex; gap:10px; overflow-x:auto; padding-bottom:15px;">
-                ${categories.map(c => `<span class="glass-card" style="padding:8px 15px; font-size:0.6rem; white-space:nowrap;">${c}</span>`).join('')}
+            <h1 class="gold-text">New Opportunity</h1>
+            <div style="display:flex; gap:10px; margin-bottom:20px;">
+                <button class="tab-btn active">Post</button>
+                <button class="tab-btn">Reel</button>
+                <button class="tab-btn">Story</button>
             </div>
+
             <div class="glass-card">
-                <small style="color:var(--gold)">HOROLOGY • SALE</small>
-                <h3>Patek Philippe Nautilus 5711</h3>
-                <p>Value: €145,000</p>
-                <button class="gold-btn" style="margin-top:15px; padding:10px; font-size:0.7rem;">View Details</button>
+                <select id="asset-type" class="glass-input" onchange="updateLimits()">
+                    <option value="sale">Sale (Acquisition)</option>
+                    <option value="rent">Rent (Charter/Leasing)</option>
+                </select>
+                <input type="number" id="asset-price" placeholder="Value in €" class="glass-input" style="margin:15px 0;">
+                <p id="limit-info" style="font-size:0.6rem; color:#666;"></p>
+                
+                <div class="upload-zone" onclick="alert('Accessing Gallery...')">
+                    <i data-lucide="camera" style="width:40px; height:40px; color:#333;"></i>
+                    <p>Upload Luxury Media</p>
+                </div>
+
+                <div id="fee-preview" class="glass-card" style="background:rgba(212,175,55,0.05); border:1px dashed var(--gold); margin-top:20px;">
+                    <small>PROXIMITY FEE CALCULATION:</small>
+                    <div id="fee-results" style="font-size:0.8rem; margin-top:10px;">Enter value to see commissions...</div>
+                </div>
+
+                <button class="gold-btn" onclick="validateAndPost()" style="margin-top:20px;">Publish to the Chain</button>
             </div>
-        </div>`;
+        </div>
+    `;
+    updateLimits();
+    lucide.createIcons();
 }
 
-init();
+function updateLimits() {
+    const type = document.getElementById('asset-type').value;
+    const info = document.getElementById('limit-info');
+    info.innerText = type === 'sale' ? "Minimum requirement: €500,000" : "Minimum requirement: €5,000";
+}
