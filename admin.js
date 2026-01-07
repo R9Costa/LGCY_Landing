@@ -1,11 +1,11 @@
-/* admin.js - The Sovereign Architect Panel */
+/* admin.js - Sovereign Grand Dashboard */
 function renderDirectorate(container) {
     const totalLP = 100 + 25 + 125; 
     const meritPercentage = (totalLP / 1000) * 100;
 
     container.innerHTML = `
         <div style="padding: 20px; padding-bottom:100px;">
-            <h1 class="gold-text" style="font-family:'Playfair Display'; italic;">Grand Dashboard</h1>
+            <h1 class="gold-text" style="font-family:'Playfair Display';">Grand Dashboard</h1>
             
             <div class="glass-card" style="text-align:center;">
                 <div style="width:60px; height:60px; background:#111; border:2px solid var(--gold); border-radius:50%; margin:0 auto;"></div>
@@ -17,11 +17,10 @@ function renderDirectorate(container) {
             </div>
 
             <div class="glass-card">
-                <h3 style="font-size:0.7rem; color:#888;">VAULT</h3>
-                <p>Security Deposits: <strong>28.000 €</strong></p>
-                <p>Operational Capital: <strong>7.000 €</strong></p>
+                <p>Security Vault: <strong>28.000 €</strong></p>
+                <p>Monthly Revenue: <strong>7.000 €</strong></p>
                 <hr style="border:0; border-top:1px solid #222; margin:15px 0;">
-                <small style="color:var(--gold);">Founder Status Active</small>
+                <small style="color:var(--gold);">Verification Process: Automatic Active [cite: 2025-12-23]</small>
             </div>
 
             <div class="glass-card">
