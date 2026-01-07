@@ -1,29 +1,46 @@
-:root { --gold: #D4AF37; --glass: rgba(10, 10, 10, 0.95); --border: rgba(212, 175, 55, 0.15); }
-
+:root { --gold: #D4AF37; --glass: rgba(0,0,0,0.8); --border: rgba(212,175,55,0.15); }
 body, html { margin: 0; background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; }
 
-/* Cabeçalho e Stories Slim */
-.app-header { height: 60px; display: flex; align-items: center; justify-content: center; color: var(--gold); border-bottom: 1px solid var(--border); position: fixed; top:0; width:100%; z-index:1000; background: #000; font-family: 'Playfair Display'; italic; font-size: 1.2rem; }
-.stories-wrapper { display: flex; gap: 12px; padding: 75px 15px 15px 15px; overflow-x: auto; background: #000; scrollbar-width: none; border-bottom: 1px solid rgba(255,255,255,0.03); }
-.stories-wrapper div div { width: 55px !important; height: 55px !important; border-radius: 50%; border: 2px solid var(--gold); background: #111; margin: 0 auto; }
+/* Header & Stories Slim */
+.app-header { height: 60px; display: flex; align-items: center; justify-content: center; color: var(--gold); border-bottom: 1px solid var(--border); position: fixed; top:0; width:100%; z-index:1000; background: #000; font-family: 'Playfair Display'; font-size: 1.2rem; }
+.stories-wrapper { display: flex; gap: 12px; padding: 75px 15px 15px 15px; overflow-x: auto; background: #000; scrollbar-width: none; }
+.stories-wrapper div div { width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--gold); background: #111; }
 
-/* Intelligence Feed (9:16) */
-.intelligence-scroll { height: calc(100vh - 160px); overflow-y: scroll; scroll-snap-type: y mandatory; }
-.intelligence-reel { height: calc(100vh - 160px); scroll-snap-align: start; position: relative; cursor: pointer; }
-.intelligence-reel iframe { width: 100%; height: 100%; pointer-events: none; transform: scale(1.1); }
+/* Container do Feed (Snap Scroll) */
+.feed-container { height: calc(100vh - 145px); overflow-y: scroll; scroll-snap-type: y mandatory; }
 
-.reel-overlay { position: absolute; bottom: 0; padding: 40px 20px; background: linear-gradient(transparent, rgba(0,0,0,0.95)); width: 100%; box-sizing: border-box; }
+.reel-card { 
+    height: calc(100vh - 145px); scroll-snap-align: start; position: relative; width: 100vw; overflow: hidden;
+}
 
-/* Legacy Post (Imagens/Notícias Internas) [cite: 2025-12-23] */
-.legacy-post { height: calc(100vh - 160px); scroll-snap-align: start; background: #050505; display: flex; align-items: center; justify-content: center; }
+/* O Vídeo ocupa tudo */
+.video-wrapper { width: 100%; height: 100%; pointer-events: none; }
+.video-wrapper iframe { width: 100%; height: 100%; transform: scale(1.5); }
 
-/* Video Modal (O "Instagram" da Legacy) */
-.video-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 2000; display: none; align-items: center; justify-content: center; }
-.modal-close { position: absolute; top: 30px; right: 30px; color: var(--gold); cursor: pointer; z-index: 2100; }
-#modal-player { width: 100%; height: 100%; }
+/* Camada de Interação (Igual ao Insta) */
+.reel-overlay { 
+    position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; 
+    background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 40%);
+    display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; box-sizing: border-box;
+}
 
-/* Botões e Nav */
-.bottom-nav { position: fixed; bottom: 0; width: 100%; height: 85px; background: var(--glass); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; backdrop-filter: blur(25px); z-index:1000; }
+/* Info do Lado Esquerdo */
+.reel-info { width: 80%; }
+.user-node { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.user-node .avatar { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--gold); background: #222; }
+.reel-title { font-size: 0.9rem; line-height: 1.4; margin: 0; font-weight: 400; }
+
+/* Botões do Lado Direito */
+.reel-actions { 
+    position: absolute; right: 15px; bottom: 80px; display: flex; flex-direction: column; align-items: center; gap: 20px; 
+}
+.action-btn { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
+.action-btn span { font-size: 0.65rem; color: #fff; }
+
+/* Ícone de Som (Flutuante) */
+.sound-toggle { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 50%; }
+
+/* Nav Bottom */
+.bottom-nav { position: fixed; bottom: 0; width: 100%; height: 85px; background: #000; border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index:1000; }
 .nav-item { color: #444; }
 .nav-item.active { color: var(--gold); }
-.gold-btn { background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
