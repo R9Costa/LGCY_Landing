@@ -1,41 +1,42 @@
-:root { --gold: #D4AF37; --bg: #000; --border: #262626; --text: #fff; }
-body, html { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, system-ui, "Segoe UI", Roboto; overflow: hidden; height: 100%; }
+/* style.css - Instagram News Feed Layout */
 
-/* Header Slim Template Memorizado */
-.ig-header { height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000; background: #000; box-sizing: border-box; }
-.logo { font-family: 'Playfair Display'; font-style: italic; font-size: 1.6rem; color: var(--gold); }
-.header-actions { display: flex; gap: 22px; }
+/* Estilo do Post de Notícia (Feed Principal) */
+.ig-post { 
+    background: #000; 
+    border-bottom: 0.5px solid #262626; 
+    margin-bottom: 10px; 
+    width: 100vw;
+}
 
-/* Stories */
-.ig-stories { display: flex; gap: 14px; padding: 70px 15px 10px 15px; overflow-x: auto; scrollbar-width: none; border-bottom: 0.5px solid var(--border); }
-.story-item { min-width: 65px; text-align: center; }
-.story-ring { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(45deg, #D4AF37, #f09433, #dc2743); padding: 2px; margin-bottom: 4px; }
-.story-avatar { width: 100%; height: 100%; border-radius: 50%; background: #000; border: 2px solid #000; }
+.post-header { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 10px 15px; 
+}
 
-/* Feed & Posts */
-.ig-feed { height: calc(100vh - 145px); overflow-y: scroll; scroll-snap-type: y mandatory; -webkit-overflow-scrolling: touch; }
-.post-card { width: 100vw; height: calc(100vh - 145px); scroll-snap-align: start; position: relative; border-bottom: 1px solid var(--border); background: #000; }
+.post-user-info { display: flex; align-items: center; gap: 10px; }
+.post-avatar { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--gold); background: #111; }
+.post-username { font-size: 0.85rem; font-weight: 600; color: #fff; }
+.post-location { font-size: 0.7rem; color: #8e8e8e; display: block; }
 
-/* Media Container (Vídeo ou Foto) */
-.media-container { width: 100%; height: 100%; position: relative; overflow: hidden; }
-.media-container iframe { width: 100%; height: 100%; transform: scale(1.75); pointer-events: none; }
-.media-container img { width: 100%; height: 100%; object-fit: cover; }
+.post-media { 
+    width: 100vw; 
+    aspect-ratio: 1/1; 
+    background: #111; 
+    overflow: hidden; 
+}
+.post-media img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Overlay de Interação Instagram */
-.post-overlay { position: absolute; bottom: 0; width: 100%; padding: 15px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); box-sizing: border-box; }
-.post-actions-side { position: absolute; right: 12px; bottom: 80px; display: flex; flex-direction: column; gap: 20px; align-items: center; }
-.action-unit { text-align: center; cursor: pointer; }
-.action-unit span { font-size: 0.7rem; display: block; margin-top: 5px; font-weight: 500; }
+.post-footer { padding: 12px 15px; }
+.post-icons { display: flex; justify-content: space-between; margin-bottom: 10px; }
+.post-icons-left { display: flex; gap: 18px; }
+.post-icons i { cursor: pointer; transition: 0.2s; }
 
-.post-info { max-width: 80%; }
-.post-user { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; }
-.user-dot { width: 30px; height: 30px; border-radius: 50%; background: var(--gold); }
+.likes-count { font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; }
+.post-caption { font-size: 0.85rem; line-height: 1.4; }
+.post-caption b { margin-right: 5px; color: var(--gold); }
+.post-time { font-size: 0.65rem; color: #8e8e8e; margin-top: 8px; text-transform: uppercase; }
 
-/* Bottom Navigation */
-.ig-nav { position: fixed; bottom: 0; width: 100%; height: 85px; display: flex; justify-content: space-around; align-items: center; background: #000; border-top: 0.5px solid var(--border); z-index: 1000; }
-.nav-item { color: #fff; opacity: 0.6; cursor: pointer; }
-.nav-item.active { opacity: 1; }
-
-/* Business Logic: Payment/Inventory [cite: 2026-01-07] */
-.payment-card { background: #121212; padding: 25px; border-radius: 12px; border: 1px solid var(--gold); margin: 20px; }
-.gold-btn { background: var(--gold); color: #000; border: none; padding: 16px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; }
+/* REELS (Vídeos Verticais) permanecem no modo vertical imersivo */
+.reel-item { height: calc(100vh - 145px); scroll-snap-align: start; position: relative; }
