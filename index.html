@@ -1,27 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Legacy | Private Network</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
-    <section id="screen-app">
-        <header class="app-header">The Legacy</header>
-        <div id="stories-area" class="stories-wrapper"></div>
-        <main id="main-content" class="feed-container"></main>
-        <nav class="bottom-nav">
-            <div class="nav-item active" onclick="switchTab('intelligence', this)"><i data-lucide="layout-template"></i></div>
-            <div class="nav-item" onclick="switchTab('inventory', this)"><i data-lucide="compass"></i></div>
-            <div class="nav-item" onclick="switchTab('social', this)"><i data-lucide="message-square"></i></div>
+    <section id="instagram-clone">
+        <header class="ig-header">
+            <span class="logo">The Legacy</span>
+            <div class="header-actions">
+                <i data-lucide="plus-square" onclick="switchTab('inventory', this)"></i>
+                <i data-lucide="heart"></i>
+                <i data-lucide="message-circle"></i>
+            </div>
+        </header>
+
+        <div id="stories-area" class="ig-stories"></div>
+
+        <main id="main-content" class="ig-feed"></main>
+
+        <nav class="ig-nav">
+            <div class="nav-item active" onclick="switchTab('intelligence', this)"><i data-lucide="home"></i></div>
+            <div class="nav-item" onclick="switchTab('search', this)"><i data-lucide="search"></i></div>
+            <div class="nav-item" onclick="switchTab('reels', this)"><i data-lucide="clapperboard"></i></div>
             <div class="nav-item" onclick="switchTab('repository', this)"><i data-lucide="archive"></i></div>
-            <div class="nav-item" onclick="switchTab('directorate', this)"><i data-lucide="user"></i></div>
+            <div class="nav-item" onclick="switchTab('directorate', this)"><i data-lucide="circle-user"></i></div>
         </nav>
     </section>
+
     <script src="app.js"></script>
     <script src="admin.js"></script>
 </body>
