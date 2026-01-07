@@ -1,46 +1,46 @@
-:root { --gold: #D4AF37; --glass: rgba(0,0,0,0.8); --border: rgba(212,175,55,0.15); }
+/* style.css - Instagram Layout Otimizado */
+:root { --gold: #D4AF37; --border: rgba(212,175,55,0.15); }
 body, html { margin: 0; background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; }
 
-/* Header & Stories Slim */
 .app-header { height: 60px; display: flex; align-items: center; justify-content: center; color: var(--gold); border-bottom: 1px solid var(--border); position: fixed; top:0; width:100%; z-index:1000; background: #000; font-family: 'Playfair Display'; font-size: 1.2rem; }
-.stories-wrapper { display: flex; gap: 12px; padding: 75px 15px 15px 15px; overflow-x: auto; background: #000; scrollbar-width: none; }
+
+.stories-wrapper { display: flex; gap: 12px; padding: 75px 15px 15px 15px; overflow-x: auto; background: #000; }
 .stories-wrapper div div { width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--gold); background: #111; }
 
-/* Container do Feed (Snap Scroll) */
-.feed-container { height: calc(100vh - 145px); overflow-y: scroll; scroll-snap-type: y mandatory; }
+/* FEED CONTAINER - SNAP SCROLL */
+.feed-container { 
+    height: calc(100vh - 145px); 
+    overflow-y: scroll; 
+    scroll-snap-type: y mandatory; /* Força o encaixe do vídeo */
+    background: #000;
+}
 
 .reel-card { 
-    height: calc(100vh - 145px); scroll-snap-align: start; position: relative; width: 100vw; overflow: hidden;
+    height: calc(100vh - 145px); 
+    scroll-snap-align: start; 
+    position: relative; 
+    width: 100vw; 
+    overflow: hidden; 
 }
 
-/* O Vídeo ocupa tudo */
 .video-wrapper { width: 100%; height: 100%; pointer-events: none; }
-.video-wrapper iframe { width: 100%; height: 100%; transform: scale(1.5); }
+.video-wrapper iframe { width: 100%; height: 100%; transform: scale(1.6); }
 
-/* Camada de Interação (Igual ao Insta) */
 .reel-overlay { 
     position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; 
-    background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 40%);
-    display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; box-sizing: border-box;
+    background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 50%);
+    display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; box-sizing: border-box; 
 }
 
-/* Info do Lado Esquerdo */
-.reel-info { width: 80%; }
-.user-node { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.user-node .avatar { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--gold); background: #222; }
-.reel-title { font-size: 0.9rem; line-height: 1.4; margin: 0; font-weight: 400; }
-
-/* Botões do Lado Direito */
 .reel-actions { 
-    position: absolute; right: 15px; bottom: 80px; display: flex; flex-direction: column; align-items: center; gap: 20px; 
+    position: absolute; right: 15px; bottom: 60px; display: flex; flex-direction: column; gap: 20px; 
 }
-.action-btn { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
-.action-btn span { font-size: 0.65rem; color: #fff; }
 
-/* Ícone de Som (Flutuante) */
-.sound-toggle { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 50%; }
+.action-btn { text-align: center; cursor: pointer; }
+.action-btn span { font-size: 0.6rem; display: block; margin-top: 5px; }
 
-/* Nav Bottom */
+.sound-status { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.4); padding: 8px; border-radius: 50%; }
+
 .bottom-nav { position: fixed; bottom: 0; width: 100%; height: 85px; background: #000; border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index:1000; }
 .nav-item { color: #444; }
 .nav-item.active { color: var(--gold); }
