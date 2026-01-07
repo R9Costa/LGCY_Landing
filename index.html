@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Legacy | Intelligence</title>
+    <title>The Legacy | Elite Feed</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 
     <section id="screen-app">
         <header class="app-header">The Legacy</header>
         <div id="stories-area" class="stories-wrapper"></div>
-        <main id="main-content"></main>
+
+        <main id="main-content" class="feed-container"></main>
         
         <nav class="bottom-nav">
             <div class="nav-item active" onclick="switchTab('intelligence', this)"><i data-lucide="layout-template"></i></div>
@@ -23,11 +25,6 @@
             <div class="nav-item" onclick="switchTab('directorate', this)"><i data-lucide="user"></i></div>
         </nav>
     </section>
-
-    <div id="video-modal" class="video-modal">
-        <div class="modal-close" onclick="closeVideo()"><i data-lucide="x"></i></div>
-        <div id="modal-player"></div>
-    </div>
 
     <script src="app.js"></script>
     <script src="admin.js"></script>
