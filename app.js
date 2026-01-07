@@ -1,96 +1,136 @@
-/* app.js - Luxury News Feed Engine */
+/* The Legacy - Sovereign Intelligence Engine
+   Configurado com as chaves de acesso reais do utilizador.
+*/
 
-// CONFIGURAÇÃO DA API DE NOTÍCIAS (Podes usar NewsAPI ou GNews)
-const NEWS_API_KEY = 'TU_CHAVE_AQUI'; // Recomendo GNews.io pela qualidade das imagens
-let newsPage = 1;
+const YT_KEY = 'AIzaSyAVDwghPzU3LodThasHgT9mSo19mKDwcg'; // Chave YouTube fornecida
+const NEWS_KEY = 'D987170486046e6e309cffd6889f77bc';      // Chave GNews fornecida
 
-async function loadLuxuryNews(container, append = false) {
-    // Nicho: Bilionários, Investimentos, Luxo, Imobiliário de elite
-    const query = "luxury investment | billionaire wealth | high-end real estate | Forbes wealth";
-    const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&max=5&apikey=${NEWS_API_KEY}`;
+let players = {}; 
+let globalMuted = true;
+let ytToken = '';
+let observer;
 
-    try {
-        if (!append) container.innerHTML = '';
-        
-        // Simulação de Dados se não tiveres a chave ainda, ou Fetch real
-        const res = await fetch(url);
-        const data = await res.json();
-        
-        data.articles.forEach(article => {
-            const post = document.createElement('div');
-            post.className = 'ig-post';
-            post.innerHTML = `
-                <div class="post-header">
-                    <div class="post-user-info">
-                        <div class="post-avatar"></div>
-                        <div>
-                            <span class="post-username">LGCY_INTEL</span>
-                            <span class="post-location">Global Market Analytics</span>
-                        </div>
-                    </div>
-                    <i data-lucide="more-horizontal"></i>
-                </div>
-                
-                <div class="post-media">
-                    <img src="${article.image}" alt="Luxury News">
-                </div>
-                
-                <div class="post-footer">
-                    <div class="post-icons">
-                        <div class="post-icons-left">
-                            <i data-lucide="heart" onclick="like(this)"></i>
-                            <i data-lucide="message-circle"></i>
-                            <i data-lucide="send"></i>
-                        </div>
-                        <i data-lucide="bookmark"></i>
-                    </div>
-                    <div class="likes-count">Curado por 1,240 parceiros</div>
-                    <div class="post-caption">
-                        <b>${article.source.name}</b> ${article.title}
-                    </div>
-                    <div class="post-time">${new Date(article.publishedAt).toLocaleDateString()}</div>
-                </div>
-            `;
-            container.appendChild(post);
-        });
-        lucide.createIcons();
-    } catch (e) {
-        console.error("Erro ao carregar notícias de luxo", e);
-    }
+// Inicia a API do YouTube
+function onYouTubeIframeAPIReady() {
+    observer = new IntersectionObserver(handleMediaFocus, { threshold: 0.8 });
+    init();
 }
 
-// ATUALIZAÇÃO DA FUNÇÃO DE TAB
-async function switchTab(tab, el) {
+function init() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('access') === 'r9admin') sessionStorage.setItem('role', 'admin');
+    
+    renderStories();
+    switchTab('intelligence', document.querySelector('.nav-item'));
+}
+
+// Carregamento Híbrido (Notícias Forbes + Vídeos de Elite)
+async function loadFeed(container, append = false) {
+    if (!append) container.innerHTML = '<div id="ig-scroll-container" class="ig-feed"></div>';
+    const feed = document.getElementById('ig-scroll-container');
+
+    try {
+        // 1. Fetch de Vídeos (Luxo e Investimento)
+        const ytUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=luxury+investment+billionaire+lifestyle+2026&type=video&maxResults=3&pageToken=${ytToken}&key=${YT_KEY}`;
+        const ytRes = await fetch(ytUrl);
+        const ytData = await ytRes.json();
+        ytToken = ytData.nextPageToken || '';
+
+        // 2. Fetch de Notícias (Forbes e Bloomberg via GNews)
+        const newsUrl = `https://gnews.io/api/v4/search?q=billionaire+wealth+Forbes+luxury&lang=pt&max=3&apikey=${NEWS_KEY}`;
+        const newsRes = await fetch(newsUrl);
+        const newsData = await newsRes.json();
+
+        // 3. Montagem do Feed Estilo Instagram
+        ytData.items.forEach((video, i) => {
+            // Adiciona Vídeo (Reel)
+            feed.appendChild(createReelElement(video));
+            
+            // Intercala com Notícia se disponível
+            if (newsData.articles && newsData.articles[i]) {
+                feed.appendChild(createNewsPost(newsData.articles[i]));
+            }
+        });
+
+    } catch (e) { 
+        console.error("Erro na sincronização das APIs de Elite", e); 
+    }
+    lucide.createIcons();
+}
+
+function createReelElement(v) {
+    const div = document.createElement('div');
+    div.className = 'reel-card';
+    div.id = `card-${v.id.videoId}`;
+    div.innerHTML = `
+        <div class="video-wrapper" id="player-${v.id.videoId}"></div>
+        <div class="reel-overlay" onclick="toggleAudio()">
+            <div class="reel-info">
+                <div class="user-tag"><div class="avatar"></div> LGCY_INTEL</div>
+                <p style="font-size:0.9rem; font-weight:500;">${v.snippet.title}</p>
+            </div>
+            <div class="reel-actions">
+                <div class="action-item" onclick="event.stopPropagation(); like(this)"><i data-lucide="heart"></i><span>2.4k</span></div>
+                <div class="action-item" onclick="event.stopPropagation(); save(this)"><i data-lucide="bookmark"></i><span>Guardar</span></div>
+                <div class="action-item" onclick="event.stopPropagation(); share('${v.id.videoId}')"><i data-lucide="share-2"></i></div>
+            </div>
+        </div>`;
+    
+    new YT.Player(`player-${v.id.videoId}`, {
+        videoId: v.id.videoId,
+        playerVars: { 'autoplay': 1, 'mute': 1, 'controls': 0, 'loop': 1, 'playlist': v.id.videoId, 'modestbranding': 1, 'rel': 0 },
+        events: { 'onReady': (e) => { players[v.id.videoId] = e.target; observer.observe(div); } }
+    });
+    return div;
+}
+
+function createNewsPost(art) {
+    const div = document.createElement('div');
+    div.className = 'news-post';
+    div.innerHTML = `
+        <div class="post-header">
+            <div class="user-tag"><div class="avatar"></div> ${art.source.name}</div>
+            <i data-lucide="more-horizontal"></i>
+        </div>
+        <div class="post-media"><img src="${art.image}"></div>
+        <div class="post-footer">
+            <div class="post-icons"><i data-lucide="heart"></i> <i data-lucide="message-circle"></i> <i data-lucide="send"></i></div>
+            <p><b>${art.source.name}</b> ${art.title}</p>
+            <small style="color:#8e8e8e; font-size:0.7rem;">Publicado em ${new Date(art.publishedAt).toLocaleDateString()}</small>
+        </div>`;
+    return div;
+}
+
+// Lógica de Foco de Som (Apenas o vídeo central toca áudio)
+function handleMediaFocus(entries) {
+    entries.forEach(entry => {
+        const id = entry.target.id.replace('card-', '');
+        const p = players[id];
+        if (p && p.playVideo) {
+            if (entry.isIntersecting) {
+                p.playVideo();
+                if (!globalMuted) p.unMute(); else p.mute();
+            } else { p.pauseVideo(); p.mute(); }
+        }
+    });
+}
+
+function toggleAudio() {
+    globalMuted = !globalMuted;
+    Object.values(players).forEach(p => { 
+        if (p && p.mute) { if (globalMuted) p.mute(); else p.unMute(); }
+    });
+    lucide.createIcons();
+}
+
+// Switch Tab e Business Logic Memorizada
+function switchTab(tab, el) {
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     el.classList.add('active');
     const main = document.getElementById('main-content');
 
     if (tab === 'intelligence') {
-        // Feed de Fotos (Notícias de Luxo)
-        main.className = 'ig-feed'; 
-        loadLuxuryNews(main);
-    } else if (tab === 'reels') {
-        // Feed de Vídeos (O que já tínhamos memorizado)
-        main.className = 'ig-feed reels-mode';
-        loadReels(main); // Função memorizada do YouTube
+        loadFeed(main);
     } else if (tab === 'inventory') {
-        renderActivation(main); // Template memorizado (1000€ caução)
-    }
-    lucide.createIcons();
-}
-
-// Protocolo de Ativação Memorizado
-function renderActivation(container) {
-    container.innerHTML = `
-        <div class="payment-card">
-            <h2 style="color:var(--gold); font-family:'Playfair Display';">Node Activation</h2>
-            <div style="background:rgba(212,175,55,0.05); padding:15px; border-radius:10px; margin:20px 0;">
-                <p style="font-size:0.85rem;"><strong>Valor Total:</strong> 1.250 €</p>
-                <hr style="border:0.5px solid #333;">
-                <p style="color:var(--gold); font-size:0.75rem; font-weight:bold;">
-                    ⚠️ Protocolo Legacy: 1000€ será caução devolvida ao fim de 6 meses.
-                </p>
-            </div>
-            <button class="gold-btn" onclick="window.location.href='https://revolut.me/r9costa9/1250'">PAGAR VIA REVOLUT</button>
-        </div>`;
-}
+        main.innerHTML = `
+            <div class="payment-
