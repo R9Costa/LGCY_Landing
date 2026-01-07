@@ -1,42 +1,36 @@
-/* style.css - Instagram News Feed Layout */
+:root { --gold: #D4AF37; --bg: #000; --border: #262626; }
+body, html { margin: 0; background: var(--bg); color: #fff; font-family: -apple-system, system-ui, "Segoe UI", Roboto; overflow: hidden; height: 100%; }
 
-/* Estilo do Post de Notícia (Feed Principal) */
-.ig-post { 
-    background: #000; 
-    border-bottom: 0.5px solid #262626; 
-    margin-bottom: 10px; 
-    width: 100vw;
-}
+/* Header & Stories */
+.ig-header { height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000; background: #000; }
+.logo { font-family: 'Playfair Display'; font-style: italic; font-size: 1.6rem; color: var(--gold); }
+.header-icons { display: flex; gap: 20px; }
+.ig-stories { display: flex; gap: 15px; padding: 70px 15px 10px 15px; overflow-x: auto; scrollbar-width: none; border-bottom: 0.5px solid var(--border); }
+.story-ring { width: 62px; height: 62px; border-radius: 50%; background: linear-gradient(45deg, var(--gold), #555); padding: 2px; }
+.story-avatar { width: 100%; height: 100%; border-radius: 50%; background: #000; border: 2px solid #000; }
 
-.post-header { 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    padding: 10px 15px; 
-}
+/* Feed & Reels (Cópia Perfeita) */
+.ig-feed { height: calc(100vh - 145px); overflow-y: scroll; scroll-snap-type: y mandatory; -webkit-overflow-scrolling: touch; }
+.reel-item { height: calc(100vh - 145px); scroll-snap-align: start; position: relative; width: 100vw; overflow: hidden; background: #050505; }
+.video-box { width: 100%; height: 100%; pointer-events: none; }
+.video-box iframe { width: 100%; height: 100%; transform: scale(1.75); }
 
-.post-user-info { display: flex; align-items: center; gap: 10px; }
-.post-avatar { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--gold); background: #111; }
-.post-username { font-size: 0.85rem; font-weight: 600; color: #fff; }
-.post-location { font-size: 0.7rem; color: #8e8e8e; display: block; }
+/* Overlay Instagram Style */
+.reel-overlay { position: absolute; bottom: 0; width: 100%; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); box-sizing: border-box; }
+.reel-actions { position: absolute; right: 15px; bottom: 40px; display: flex; flex-direction: column; gap: 20px; align-items: center; }
+.action-unit { text-align: center; cursor: pointer; }
+.action-unit span { font-size: 0.7rem; display: block; margin-top: 5px; }
 
-.post-media { 
-    width: 100vw; 
-    aspect-ratio: 1/1; 
-    background: #111; 
-    overflow: hidden; 
-}
+/* News Posts (Fotos) */
+.news-post { border-bottom: 0.5px solid var(--border); padding-bottom: 15px; }
+.post-media { width: 100vw; aspect-ratio: 1/1; overflow: hidden; }
 .post-media img { width: 100%; height: 100%; object-fit: cover; }
 
-.post-footer { padding: 12px 15px; }
-.post-icons { display: flex; justify-content: space-between; margin-bottom: 10px; }
-.post-icons-left { display: flex; gap: 18px; }
-.post-icons i { cursor: pointer; transition: 0.2s; }
+/* Nav Bottom */
+.ig-nav { position: fixed; bottom: 0; width: 100%; height: 85px; display: flex; justify-content: space-around; align-items: center; background: #000; border-top: 0.5px solid var(--border); z-index: 1000; }
+.nav-btn { color: #fff; opacity: 0.5; cursor: pointer; }
+.nav-btn.active { opacity: 1; }
 
-.likes-count { font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; }
-.post-caption { font-size: 0.85rem; line-height: 1.4; }
-.post-caption b { margin-right: 5px; color: var(--gold); }
-.post-time { font-size: 0.65rem; color: #8e8e8e; margin-top: 8px; text-transform: uppercase; }
-
-/* REELS (Vídeos Verticais) permanecem no modo vertical imersivo */
-.reel-item { height: calc(100vh - 145px); scroll-snap-align: start; position: relative; }
+/* Business Card (1000€ Caução) */
+.payment-card { background: #111; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); margin: 20px; text-align: center; }
+.gold-btn { background: var(--gold); color: #000; border: none; padding: 18px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; }
