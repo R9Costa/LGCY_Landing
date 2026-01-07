@@ -1,25 +1,41 @@
-:root { --gold: #D4AF37; --border: rgba(212,175,55,0.15); }
-body, html { margin: 0; background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; height: 100%; }
+:root { --gold: #D4AF37; --bg: #000; --border: #262626; --text: #fff; }
+body, html { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, system-ui, "Segoe UI", Roboto; overflow: hidden; height: 100%; }
 
-.app-header { height: 60px; display: flex; align-items: center; justify-content: center; color: var(--gold); border-bottom: 1px solid var(--border); position: fixed; top:0; width:100%; z-index:1000; background: #000; font-family: 'Playfair Display'; font-size: 1.2rem; }
-.stories-wrapper { display: flex; gap: 12px; padding: 75px 15px 15px 15px; overflow-x: auto; background: #000; scrollbar-width: none; }
-.stories-wrapper div div { width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--gold); background: #111; }
+/* Header Slim Template Memorizado */
+.ig-header { height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000; background: #000; box-sizing: border-box; }
+.logo { font-family: 'Playfair Display'; font-style: italic; font-size: 1.6rem; color: var(--gold); }
+.header-actions { display: flex; gap: 22px; }
 
-.feed-container { height: calc(100vh - 145px); overflow-y: scroll; scroll-snap-type: y mandatory; background: #000; -webkit-overflow-scrolling: touch; }
-.reel-card { height: calc(100vh - 145px); scroll-snap-align: start; position: relative; width: 100vw; overflow: hidden; }
+/* Stories */
+.ig-stories { display: flex; gap: 14px; padding: 70px 15px 10px 15px; overflow-x: auto; scrollbar-width: none; border-bottom: 0.5px solid var(--border); }
+.story-item { min-width: 65px; text-align: center; }
+.story-ring { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(45deg, #D4AF37, #f09433, #dc2743); padding: 2px; margin-bottom: 4px; }
+.story-avatar { width: 100%; height: 100%; border-radius: 50%; background: #000; border: 2px solid #000; }
 
-.video-wrapper { width: 100%; height: 100%; pointer-events: none; }
-.video-wrapper iframe { width: 100%; height: 100%; transform: scale(1.7); }
+/* Feed & Posts */
+.ig-feed { height: calc(100vh - 145px); overflow-y: scroll; scroll-snap-type: y mandatory; -webkit-overflow-scrolling: touch; }
+.post-card { width: 100vw; height: calc(100vh - 145px); scroll-snap-align: start; position: relative; border-bottom: 1px solid var(--border); background: #000; }
 
-.reel-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 50%); display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; box-sizing: border-box; }
-.reel-actions { position: absolute; right: 15px; bottom: 60px; display: flex; flex-direction: column; gap: 20px; align-items: center; }
-.action-btn { text-align: center; cursor: pointer; }
-.action-btn span { font-size: 0.6rem; display: block; margin-top: 5px; }
+/* Media Container (Vídeo ou Foto) */
+.media-container { width: 100%; height: 100%; position: relative; overflow: hidden; }
+.media-container iframe { width: 100%; height: 100%; transform: scale(1.75); pointer-events: none; }
+.media-container img { width: 100%; height: 100%; object-fit: cover; }
 
-.sound-btn { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 50%; z-index: 10; cursor: pointer; }
+/* Overlay de Interação Instagram */
+.post-overlay { position: absolute; bottom: 0; width: 100%; padding: 15px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); box-sizing: border-box; }
+.post-actions-side { position: absolute; right: 12px; bottom: 80px; display: flex; flex-direction: column; gap: 20px; align-items: center; }
+.action-unit { text-align: center; cursor: pointer; }
+.action-unit span { font-size: 0.7rem; display: block; margin-top: 5px; font-weight: 500; }
 
-.bottom-nav { position: fixed; bottom: 0; width: 100%; height: 85px; background: #000; border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index:1000; }
-.nav-item { color: #444; cursor: pointer; }
-.nav-item.active { color: var(--gold); }
-.glass-card { background: rgba(12,12,12,0.98); border: 1px solid var(--border); padding: 25px; border-radius: 12px; margin: 15px; }
-.gold-btn { width: 100%; background: var(--gold); color: #000; border: none; padding: 18px; font-weight: bold; border-radius: 8px; text-transform: uppercase; cursor: pointer; }
+.post-info { max-width: 80%; }
+.post-user { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; }
+.user-dot { width: 30px; height: 30px; border-radius: 50%; background: var(--gold); }
+
+/* Bottom Navigation */
+.ig-nav { position: fixed; bottom: 0; width: 100%; height: 85px; display: flex; justify-content: space-around; align-items: center; background: #000; border-top: 0.5px solid var(--border); z-index: 1000; }
+.nav-item { color: #fff; opacity: 0.6; cursor: pointer; }
+.nav-item.active { opacity: 1; }
+
+/* Business Logic: Payment/Inventory [cite: 2026-01-07] */
+.payment-card { background: #121212; padding: 25px; border-radius: 12px; border: 1px solid var(--gold); margin: 20px; }
+.gold-btn { background: var(--gold); color: #000; border: none; padding: 16px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; }
