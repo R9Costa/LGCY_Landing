@@ -1,24 +1,22 @@
-/* app.js - Intelligence & Activation Node */
+/* app.js - Optimized Intelligence & Payment Engine */
 const YT_KEY = 'AIzaSyAVDwghPzU3LodThasHgT9mSo19mKDwcgY';
+let nextPageToken = '';
+let isFetching = false;
 
 function init() {
     const params = new URLSearchParams(window.location.search);
     if (params.get('access') === 'r9admin') sessionStorage.setItem('role', 'admin');
-    if (params.get('payment') === 'success') { triggerSuccess(); return; }
     
     renderStories();
     switchTab('intelligence', document.querySelector('.nav-item'));
-    
-    window.onblur = () => document.body.classList.add('blurred');
-    window.onfocus = () => document.body.classList.remove('blurred');
 }
 
 function renderStories() {
-    const users = ['My Legacy', 'Director', 'Elite_01', 'Bespoke_H'];
+    const users = ['My Legacy', 'Director', 'Elite_01', 'Private_V'];
     document.getElementById('stories-area').innerHTML = users.map(u => `
-        <div style="min-width:75px; text-align:center;">
-            <div style="width:60px; height:60px; border-radius:50%; border:2px solid #D4AF37; background:#111; margin:0 auto;"></div>
-            <small style="font-size:0.55rem; color:#888; display:block; margin-top:5px;">${u}</small>
+        <div style="min-width:70px; text-align:center;">
+            <div></div>
+            <small style="font-size:0.5rem; color:#888; display:block; margin-top:5px;">${u}</small>
         </div>`).join('');
 }
 
@@ -26,11 +24,11 @@ async function switchTab(tab, el) {
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     el.classList.add('active');
     const main = document.getElementById('main-content');
-    
+
     if (tab === 'intelligence') {
         loadIntelligence(main);
     } else if (tab === 'inventory') {
-        renderJoinProcess(main); // Exibe o processo de adesão
+        renderJoinPlatform(main);
     } else if (tab === 'directorate' && sessionStorage.getItem('role') === 'admin') {
         renderDirectorate(main);
     } else {
@@ -39,44 +37,65 @@ async function switchTab(tab, el) {
     lucide.createIcons();
 }
 
-async function loadIntelligence(container) {
-    const query = "luxury real estate news | billionaire investment";
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=5&key=${YT_KEY}`;
+async function loadIntelligence(container, append = false) {
+    if (isFetching) return;
+    isFetching = true;
+    const query = "luxury investment | mansion tour 2026 | supercar world";
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=5&pageToken=${nextPageToken}&key=${YT_KEY}`;
+
     try {
+        if (!append) container.innerHTML = '<div id="feed-container" class="intelligence-scroll"></div>';
+        const feed = document.getElementById('feed-container');
         const res = await fetch(url);
         const data = await res.json();
-        let html = '<div class="intelligence-scroll">';
-        data.items.forEach(v => {
-            html += `<div class="intelligence-reel">
-                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${v.id.videoId}?autoplay=1&mute=1&controls=0" frameborder="0"></iframe>
-                <div class="reel-overlay">
-                    <span style="background:var(--gold); color:#000; padding:2px 8px; border-radius:10px; font-size:0.6rem; font-weight:bold;">INTEL</span>
-                    <h3 style="font-family:'Playfair Display'; margin-top:10px;">${v.snippet.title}</h3>
-                </div></div>`;
+        nextPageToken = data.nextPageToken || '';
+
+        data.items.forEach((v, index) => {
+            if (index % 3 === 0 && index !== 0) feed.appendChild(createLegacyPostElement());
+            feed.appendChild(createVideoElement(v));
         });
-        container.innerHTML = html + '</div>';
-    } catch(e) { container.innerHTML = "<p style='padding:20px;'>Intelligence Node Offline.</p>"; }
+        isFetching = false;
+    } catch(e) { isFetching = false; }
 }
 
-function renderJoinProcess(container) {
+function createVideoElement(v) {
+    const div = document.createElement('div');
+    div.className = 'intelligence-reel';
+    div.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id.videoId}?autoplay=1&mute=1&controls=0" frameborder="0"></iframe>
+        <div class="reel-overlay"><span class="tag-intel">GLOBAL INTEL</span><h3>${v.snippet.title}</h3></div>`;
+    return div;
+}
+
+function createLegacyPostElement() {
+    const div = document.createElement('div');
+    div.className = 'legacy-post';
+    div.innerHTML = `<div class="glass-card" style="width:100%; margin:30px;">
+        <span class="tag-legacy">LEGACY CHAIN EXCLUSIVE</span>
+        <h2 class="gold-text">Off-Market: Ferrari F40</h2>
+        <p style="font-size:0.8rem; color:#ccc;">Location: Maranello | Price: P.O.A.</p>
+        <button class="gold-btn" style="padding:10px; margin-top:15px; font-size:0.7rem;">CONTACT OWNER</button>
+    </div>`;
+    return div;
+}
+
+function renderJoinPlatform(container) {
     container.innerHTML = `
         <div class="glass-card" style="text-align:center; margin-top:50px;">
             <h2 class="gold-text">Sovereign Activation</h2>
-            <div style="text-align:left; margin:25px 0; font-size:0.85rem; line-height:1.8;">
+            <div style="text-align:left; margin:20px 0; font-size:0.8rem; line-height:1.8;">
                 <div style="display:flex; justify-content:space-between;"><span>Security Deposit</span><span>1.000 €</span></div>
                 <div style="display:flex; justify-content:space-between;"><span>Monthly Subscription</span><span>250 €</span></div>
-                <hr style="border:0; border-top:1px solid #222; margin:10px 0;">
+                <hr style="border-top:1px solid #222; margin:10px 0;">
                 <div style="display:flex; justify-content:space-between; font-weight:bold; color:var(--gold);"><span>TOTAL DUE</span><span>1.250 €</span></div>
             </div>
-
-            <div style="background:rgba(212,175,55,0.1); border:1px solid var(--border); padding:15px; border-radius:8px; margin-bottom:20px; font-size:0.75rem; color:var(--gold);">
-                <i data-lucide="info" style="width:14px; vertical-align:middle;"></i>
-                <strong>Protocolo de Reembolso:</strong> Os 1.000 € de caução serão devolvidos na totalidade após 6 meses de permanência ativa. [cite: 2026-01-07]
+            <div style="background:rgba(212,175,55,0.1); border:1px solid var(--border); padding:12px; border-radius:8px; margin-bottom:20px; font-size:0.7rem; color:var(--gold);">
+                <i data-lucide="info" style="width:12px; vertical-align:middle;"></i>
+                <strong>Reembolso:</strong> A caução de 1.000 € será devolvida ao fim de 6 meses de atividade. [cite: 2026-01-07]
             </div>
-
             <button class="gold-btn" onclick="window.location.href='https://revolut.me/r9costa9/1250'">PAY VIA REVOLUT</button>
         </div>`;
     lucide.createIcons();
 }
 
+window.onscroll = () => { if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 800) loadIntelligence(null, true); };
 init();
