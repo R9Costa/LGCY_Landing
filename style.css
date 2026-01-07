@@ -1,32 +1,24 @@
 :root { --gold: #D4AF37; --bg: #000; --border: #262626; }
-body, html { margin: 0; background: var(--bg); color: #fff; font-family: -apple-system, system-ui, sans-serif; overflow: hidden; height: 100%; }
+body, html { margin: 0; background: var(--bg); color: #fff; font-family: -apple-system, sans-serif; overflow: hidden; height: 100%; }
 
-/* Layout Instagram */
 .ig-header { height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000; background: #000; box-sizing: border-box; }
 .logo { font-family: 'Playfair Display'; font-style: italic; font-size: 1.5rem; color: var(--gold); }
-.header-icons { display: flex; gap: 20px; }
+.header-icons { display: flex; gap: 20px; color: #fff; }
 
-.ig-stories { display: flex; gap: 15px; padding: 70px 15px 10px 15px; overflow-x: auto; scrollbar-width: none; border-bottom: 0.5px solid var(--border); }
+.ig-stories { display: flex; gap: 15px; padding: 75px 15px 15px 15px; overflow-x: auto; scrollbar-width: none; border-bottom: 0.5px solid var(--border); }
 .story-ring { min-width: 62px; height: 62px; border-radius: 50%; background: linear-gradient(45deg, var(--gold), #555); padding: 2px; }
 
-.ig-feed { height: calc(100vh - 145px); overflow-y: scroll; scroll-snap-type: y mandatory; -webkit-overflow-scrolling: touch; }
-.reel-item { height: calc(100vh - 145px); scroll-snap-align: start; position: relative; width: 100vw; overflow: hidden; background: #000; }
+.ig-feed { height: calc(100vh - 145px); overflow-y: scroll; scroll-snap-type: y mandatory; -webkit-overflow-scrolling: touch; margin-top: 0; }
+.reel-item { height: calc(100vh - 145px); scroll-snap-align: start; position: relative; width: 100vw; overflow: hidden; }
 
-/* Media & Video */
 .video-box { width: 100%; height: 100%; pointer-events: none; }
 .video-box iframe { width: 100%; height: 100%; transform: scale(1.75); }
-.news-post { border-bottom: 0.5px solid var(--border); background: #000; }
+
+.news-post { border-bottom: 0.5px solid var(--border); background: #000; margin-bottom: 10px; }
 .news-media img { width: 100vw; aspect-ratio: 1/1; object-fit: cover; }
 
-/* Overlay de Interação */
-.reel-overlay { position: absolute; bottom: 0; width: 100%; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); box-sizing: border-box; }
-.reel-actions { position: absolute; right: 15px; bottom: 40px; display: flex; flex-direction: column; gap: 20px; align-items: center; }
-.action-unit { text-align: center; cursor: pointer; }
-.action-unit span { font-size: 0.7rem; display: block; margin-top: 5px; }
-
-/* Nav */
 .ig-nav { position: fixed; bottom: 0; width: 100%; height: 85px; display: flex; justify-content: space-around; align-items: center; background: #000; border-top: 0.5px solid var(--border); z-index: 1000; }
-.nav-btn { color: #fff; opacity: 0.5; }
+.nav-btn { color: #fff; opacity: 0.5; cursor: pointer; }
 .nav-btn.active { opacity: 1; }
 
 .payment-card { background: #111; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); margin: 20px; text-align: center; }
