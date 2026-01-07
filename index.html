@@ -3,26 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Legacy | Private</title>
-    <style>
-        body { background: #000; color: #fff; margin: 0; font-family: sans-serif; overflow: hidden; }
-        .app-header { height: 60px; display: flex; align-items: center; justify-content: center; color: #D4AF37; border-bottom: 1px solid #262626; font-family: serif; font-style: italic; font-size: 1.5rem; }
-        .loading-msg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #444; font-size: 0.8rem; }
-    </style>
+    <title>The Legacy</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
-    <div id="loading" class="loading-msg">A sincronizar com a Legacy Chain...</div>
+    <div id="loading-screen" style="position:fixed; inset:0; background:#000; display:flex; align-items:center; justify-content:center; z-index:9999; color:#444; font-size:0.8rem;">
+        Sincronizando com a Legacy Chain...
+    </div>
 
-    <section id="app-shell" style="display:none;">
-        <header class="app-header">The Legacy</header>
+    <section id="instagram-ui" style="visibility:hidden;">
+        <header class="ig-header">
+            <span class="logo">The Legacy</span>
+            <div class="header-icons">
+                <i data-lucide="heart"></i>
+                <i data-lucide="message-circle"></i>
+            </div>
+        </header>
+
         <div id="stories-area" class="ig-stories"></div>
         <main id="main-content" class="ig-feed"></main>
+
         <nav class="ig-nav">
             <div class="nav-btn active" onclick="switchTab('intelligence', this)"><i data-lucide="home"></i></div>
+            <div class="nav-btn" onclick="switchTab('search', this)"><i data-lucide="search"></i></div>
             <div class="nav-btn" onclick="switchTab('inventory', this)"><i data-lucide="plus-square"></i></div>
+            <div class="nav-btn" onclick="switchTab('repository', this)"><i data-lucide="archive"></i></div>
             <div class="nav-btn" onclick="switchTab('directorate', this)"><i data-lucide="circle-user"></i></div>
         </nav>
     </section>
