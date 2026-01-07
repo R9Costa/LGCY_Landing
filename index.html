@@ -10,11 +10,7 @@
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
-    <div id="loading-screen" style="position:fixed; inset:0; background:#000; display:flex; align-items:center; justify-content:center; z-index:9999; color:#444; font-size:0.8rem;">
-        Sincronizando com a Legacy Chain...
-    </div>
-
-    <section id="instagram-ui" style="visibility:hidden;">
+    <section id="instagram-ui">
         <header class="ig-header">
             <span class="logo">The Legacy</span>
             <div class="header-icons">
@@ -24,7 +20,11 @@
         </header>
 
         <div id="stories-area" class="ig-stories"></div>
-        <main id="main-content" class="ig-feed"></main>
+        <main id="main-content" class="ig-feed">
+            <div id="status-msg" style="padding:20px; text-align:center; color:#444; font-size:0.8rem;">
+                A ligar à Legacy Chain...
+            </div>
+        </main>
 
         <nav class="ig-nav">
             <div class="nav-btn active" onclick="switchTab('intelligence', this)"><i data-lucide="home"></i></div>
